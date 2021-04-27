@@ -1,7 +1,7 @@
 var mongoose = require("mongoose");
 
 mongoose
-  .connect("mongodb://localhost/Todo_App", {
+  .connect("mongodb://127.0.0.1:27017/TodoApp", {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useCreateIndex: true,

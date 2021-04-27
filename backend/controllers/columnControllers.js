@@ -1,13 +1,18 @@
-const ColumnSchema = require("../models/todoSchema");
+const ColumnSchema = require("../models/columnSchema");
 
 const columnControllers = {};
 
 //Get Columns
 columnControllers.getAll = async (req, res) => {
-  await ColumnSchema.find().then(function (cols) {
-    res.send(cols);
-    return res.redirect("/");
-  });
+  try {
+    await ColumnSchema.find().then(function (cols) {
+      res.send(cols);
+      return res.redirect("/columns/all");
+    });
+  } catch (err) {
+    console.log(err.message);
+    res.json({ success: false, error: err.message });
+  }
 };
 
 //Create Columns
@@ -20,7 +25,7 @@ columnControllers.createColumn = async (req, res) => {
     });
     await column.save().then(function (column) {
       console.log(column);
-      return res.redirect("/");
+      return res.redirect("/columns/all");
     });
   } catch (err) {
     console.log(err.message);

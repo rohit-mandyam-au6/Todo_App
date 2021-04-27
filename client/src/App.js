@@ -22,4 +22,5 @@ const mapStateToProps = (state) => {
     auth: state.auth,
   };
 };
+
 export default withRouter(connect(mapStateToProps)(App));

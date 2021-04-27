@@ -14,7 +14,7 @@ export const reorderCard = (payload) => {
     const { destination, draggableId, source, columns } = payload;
     const startList = columns.columns[source.droppableId];
     const finishList = columns.columns[destination.droppableId];
-    // debugger;
+
     if (startList === finishList) {
       const newCardIds = Array.from(startList.todoIds);
       newCardIds.splice(source.index, 1);
@@ -84,7 +84,7 @@ export const reorderList = (columnPayload, columnId) => {
       payload: newColumnOrder,
     });
 
-    const res = await axios.patch(`/`, {
+    const res = await axios.patch('/', {
       columnId,
       newColumnOrder,
     });
@@ -134,16 +134,16 @@ export const getAllCards = (columnIds) => {
 };
 
 export const editColumnTitle = (editedTitle, columnId) => {
-  return dispatch => {
+  return (dispatch) => {
     axios
       .post(`/columns/${columnId}?title=true`, { title: editedTitle })
-      .then(res => {
+      .then((res) => {
         dispatch({
           type: EDIT_COLUMN_TITLE,
           payload: { editedTitle, columnId },
         });
       })
-      .catch(err => console.log(err));
+      .catch((err) => console.log(err));
   };
 };
 

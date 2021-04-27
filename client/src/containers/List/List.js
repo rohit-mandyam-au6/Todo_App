@@ -75,7 +75,7 @@ class List extends Component {
         <button className={classes.add_list} onClick={this.onAddColumnHandler}>
           <span className={classes.add_list__addicon}>+</span>
           <span className={classes.add_list__text}>
-            {this.props.list.columns.length > 0
+            {this.props.list.columnOrder.length > 0
               ? "Add another list"
               : "add a list"}
           </span>
@@ -85,7 +85,7 @@ class List extends Component {
   };
 
   onDragEnd = (result) => {
-    const { destination, draggableId, source, type } = result;
+    const { destination, draggableId, source } = result;
     const payload = {
       destination,
       draggableId,
@@ -102,25 +102,24 @@ class List extends Component {
       return;
     }
 
-    if (type === "column") {
+    /*if (type === "column") {
       if (source.index !== destination.index) {
         this.props.reorderList(
-          { ...payload, column: this.props.list.columns },
-          this.props.columnId,
+          { ...payload, column: this.state.list.columnOrder },
+          this.props.columnId
         );
         return;
       }
-
       return;
-    }
+    }*/
 
     this.props.reorderCard({ ...payload, columns: this.props.cards });
   };
 
   componentDidUpdate(prevProps, prevState) {
-    if (this.props.list.columns && this.props.list.columns.columns) {
+    if (this.props.list.columns && this.props.list.columnOrder) {
       if (!this.state.areAllCardsReceived) {
-        const columnIds = this.props.columns.columns;
+        const columnIds = this.props.columnOrder;
         this.props.getAllCards(columnIds);
         this.setState({ areAllCardsReceived: true });
       }
@@ -133,7 +132,7 @@ class List extends Component {
 
     if (this.props.list.columns && this.props.cards.cards) {
       console.log(this.props.list, this.props.cards);
-      if (this.props.list.columns.length === 0) {
+      if (this.props.list.columnOrder.length === 0) {
         listData = (
           <React.Fragment>
             <p>Your Board appears to be Empty. Start Creating Lists</p>
@@ -159,7 +158,7 @@ class List extends Component {
                   ref={provided.innerRef}
                 >
                   {this.props.list.columns.map((columnId, index) => {
-                    const column = this.props.list.columns.columns[columnId];
+                    const column = this.props.list.columnOrder[columnId];
                     const cards = column.cardIds.map(
                       (cardId) => this.props.cards.cards[cardId]
                     );
@@ -185,6 +184,7 @@ class List extends Component {
         );
       }
     } else {
+      console.log(this.props.list, this.props.cards);
       listData = <p>Please Wait</p>;
     }
     return listData;

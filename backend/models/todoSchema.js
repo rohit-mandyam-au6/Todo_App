@@ -14,6 +14,7 @@ const todoItem = new Schema(
     },
     status: {
       type: String,
+      required: false,
       enum: ["Open", "Work In-Progress", "Completed"],
       default: "Open",
     },

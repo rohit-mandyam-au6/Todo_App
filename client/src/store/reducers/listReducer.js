@@ -5,7 +5,7 @@ import {
   REORDER_CARD,
   REORDER_LIST,
   SET_CURRENT_BOARD_LISTS,
-} from '../actions/actionTypes';
+} from "../actions/actionTypes";
 
 const initialState = {
   columns: null,
@@ -15,36 +15,6 @@ const initialState = {
 const listReducer = (state = initialState, action) => {
   switch (action.type) {
     case REORDER_CARD: {
-      // const {destination, draggableId, source} = action.payload;
-      //
-      // const startList = state.columns[source.droppableId];
-      // const finishList = state.columns[destination.droppableId];
-      //
-      // if (startList === finishList) {
-      //             //     // console.log('destination',destination,'\ndraggableId',draggableId,'\nsource',source,'\nstartList',startList,'\nfinishList',finishList);
-      //             //     console.log(startList.cardIds);
-      //             //     const newCardIds = Array.from(startList.cardIds);
-      //             //     newCardIds.splice(source.index, 1);
-      //             //     newCardIds.splice(destination.index, 0, draggableId);
-      //             //
-      //             //     const newList ={
-      //             //         ...state.columns[source.droppableId],
-      //             //         cardIds:newCardIds
-      //             //     };
-      //             //
-      //             //     const newState = {
-      //             //         ...state,
-      //             //         columns: {
-      //             //             ...state.columns,
-      //             //             [newList.id]: newList
-      //             //         }
-      //             //     };
-      //             //
-      //             //
-      //             //
-      //             //     return newState;
-      //             // }
-
       const { newSameColumnList, newDifferentColumnsList } = action.payload;
 
       if (newSameColumnList) {
@@ -60,11 +30,6 @@ const listReducer = (state = initialState, action) => {
         return newState;
       }
 
-      // moving from one list to another list
-      // const removedCardIds = Array.from(startList.cardIds);
-      // const addedCardIds = Array.from(finishList.cardIds);
-      // removedCardIds.splice(source.index, 1);
-      // addedCardIds.splice(destination.index, 0, draggableId);
       if (newDifferentColumnsList) {
         const newState = {
           ...state,
@@ -78,12 +43,11 @@ const listReducer = (state = initialState, action) => {
         return newState;
       }
     }
+    break;
 
     case REORDER_LIST: {
       const newColumnOrder = action.payload;
-      // console.log(state.columnOrder);
-      // newColumnOrder.splice(source.index, 1);
-      // newColumnOrder.splice(destination.index, 0, draggableId);
+
       const newState = {
         ...state,
         columnOrder: newColumnOrder,
@@ -152,6 +116,7 @@ const listReducer = (state = initialState, action) => {
         };
       }
     }
+    break;
 
     case ADD_CARD: {
       const { columnId, cardId } = action.payload;
